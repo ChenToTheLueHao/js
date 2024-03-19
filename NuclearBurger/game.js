@@ -9,7 +9,12 @@ let config = {
             debug: true
         }
     },
-    backgroundColor: '#000000',
+    backgroundColor: '#353535',
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
+      },
+    
     scene: [preloadScene, level1, level2, level3, level4, level5]
 
 };

@@ -20,7 +20,7 @@ class level3 extends Phaser.Scene {
     this.load.image("pipoyaIMG", "assets/pipoya32x32.png");
     this.load.image("cheesefallIMG", "assets/cheesefall.png");
 
-    this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:15, frameHeight:15 });
+    this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:32, frameHeight:32 });
     this.load.spritesheet("cheese", 'assets/cheese.png',{ frameWidth:32, frameHeight:32 });
 
 
