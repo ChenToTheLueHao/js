@@ -114,15 +114,10 @@ class level2 extends Phaser.Scene {
     // 1st parameter is name in Tiled,
     // 2nd parameter is key in Preload
     let pipoyaTiles = map.addTilesetImage("pipoya32x32", "pipoyaIMG")
-    // let pipoyaTiles2 = map.addTilesetImage("pipoya16x16", "pipoyaIMG2")
-    // let buildingTiles = map.addTilesetImage("Buildings32x32", "buildings");
-    // let forestTiles = map.addTilesetImage("forest_tiles", "forest");
-  
 
     //Step 5  create an array of tiles
     let tilesArray = [
         pipoyaTiles,
-        // pipoyaTiles2
         ];
 
     // Step 6  Load in layers by layers
@@ -135,6 +130,7 @@ class level2 extends Phaser.Scene {
     console.log("animationScene")
 
     // make the camera follow the player
+   
     // load player
         this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y, "walk").setScale(2)
         this.cameras.main.startFollow(this.player);
@@ -175,26 +171,26 @@ class level2 extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.item2, this.hitItem, null, this);
     this.physics.add.overlap(this.player, this.item1, this.hitItem, null, this);
 
-//enemy
-let  enemy1 = map.findObject("enemyLayer",(obj) => obj.name === "1");
-this.enemy1 = this.physics.add.sprite(enemy1.x, enemy1.y, "bunny");
+    //enemy
+    let  enemy1 = map.findObject("enemyLayer",(obj) => obj.name === "1");
+    this.enemy1 = this.physics.add.sprite(enemy1.x, enemy1.y, "bunny");
 
     //create cursor
     this.cursors = this.input.keyboard.createCursorKeys();
 
     //adding collision
-       this.trees.setCollisionByExclusion(-1, true);
-       this.physics.add.collider(this.player, this.trees)
+    this.trees.setCollisionByExclusion(-1, true);
+    this.physics.add.collider(this.player, this.trees)
 
-       this.house.setCollisionByExclusion(-1, true);
-       this.physics.add.collider(this.player, this.house)
+    this.house.setCollisionByExclusion(-1, true);
+    this.physics.add.collider(this.player, this.house)
 
-          //sound
+    //sound
     this.doorSnd = this.sound.add("door").setVolume(0.5);
     this.plopSnd = this.sound.add("plop").setVolume(0.5);
        
-// in create, add tweens  
-this.tweens.add({
+    // in create, add tweens  
+    this.tweens.add({
     targets: this.enemy1,
     x: 100,
     //flipX: true,
@@ -252,52 +248,39 @@ hitItem(player,item5) {
     console.log("hitItem")
     console.log("play plop")
     this.plopSnd.play()
-   // this.camera.main.shake(500)// 500ms
-   //(player knockback) player.x = player.x - 50
     item5.disableBody(true,true)
    return false;
   }
-  //call this function when overlap
 hitItem(player,item4) {
     console.log("hitItem")
     console.log("play plop")
     this.plopSnd.play()
-   // this.camera.main.shake(500)// 500ms
-   //(player knockback) player.x = player.x - 50
     item3.disableBody(true,true)
    return false;
   }
-  //call this function when overlap
 hitItem(player,item3) {
     console.log("hitItem")
     console.log("play plop")
     this.plopSnd.play()
-   // this.camera.main.shake(500)// 500ms
-   //(player knockback) player.x = player.x - 50
     item3.disableBody(true,true)
    return false;
   }
-    //call this function when overlap
 hitItem(player,item2) {
     console.log("hitItem")
     console.log("play plop")
     this.plopSnd.play()
-   // this.camera.main.shake(500)// 500ms
-   //(player knockback) player.x = player.x - 50
     item2.disableBody(true,true)
    return false;
   }
-    //call this function when overlap
 hitItem(player,item1) {
     console.log("hitItem")
     console.log("play plop")
     this.plopSnd.play()
-   // this.camera.main.shake(500)// 500ms
-   //(player knockback) player.x = player.x - 50
     item1.disableBody(true,true)
    return false;
   }
 
+//jump to level1
 level1(player, tile) {
     console.log("level1 function");
     let playerPos = {}
@@ -306,7 +289,7 @@ level1(player, tile) {
     this.doorSnd.play()
     this.scene.start("level1",{playerPos:playerPos});
 }
-
+//jump to level3
 level3(player, tile) {
     console.log("level3 function");
     let playerPos = {}

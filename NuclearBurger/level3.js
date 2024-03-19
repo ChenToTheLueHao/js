@@ -15,14 +15,12 @@ class level3 extends Phaser.Scene {
         this.load.tilemapTiledJSON("level3", "assets/volcano.tmj");
 
         // Step 2 : Preload any images here
-    // this.load.image("street", "assets/Street32x32.png");
-    // this.load.image("buildings", "assets/Buildings32x32.png");
-    this.load.image("pipoyaIMG", "assets/pipoya32x32.png");
-    this.load.image("cheesefallIMG", "assets/cheesefall.png");
+      this.load.image("pipoyaIMG", "assets/pipoya32x32.png");
+      this.load.image("cheesefallIMG", "assets/cheesefall.png");
 
-    this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:32, frameHeight:32 });
-    this.load.spritesheet("cheese", 'assets/cheese.png',{ frameWidth:32, frameHeight:32 });
-
+      this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:32, frameHeight:32 });
+      this.load.spritesheet("cheese", 'assets/cheese.png',{ frameWidth:32, frameHeight:32 });
+      this.load.audio("plop", "assets/plop.mp3")
 
     } // end of preload //
 
@@ -114,7 +112,6 @@ class level3 extends Phaser.Scene {
     this.trees = map.createLayer("trees",tilesArray,0,0);
   
    // make the camera follow the player
-
    this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y, "walk").setScale(2)
    this.cameras.main.startFollow(this.player);
    window.player = this.player
@@ -138,6 +135,16 @@ class level3 extends Phaser.Scene {
     let  item5 = map.findObject("objectLayer",(obj) => obj.name === "5");
     this.item5 = this.physics.add.sprite(item5.x, item5.y, "cheese");
  
+    //sound
+    this.plopSnd = this.sound.add("plop").setVolume(0.5);
+
+  //overlap
+  this.physics.add.overlap(this.player, this.item5, this.hitItem, null, this);
+  this.physics.add.overlap(this.player, this.item4, this.hitItem, null, this);
+  this.physics.add.overlap(this.player, this.item3, this.hitItem, null, this);
+  this.physics.add.overlap(this.player, this.item2, this.hitItem, null, this);
+  this.physics.add.overlap(this.player, this.item1, this.hitItem, null, this);
+
    //adding collision
    this.trees.setCollisionByExclusion(-1, true);
    this.physics.add.collider(this.player, this.trees)
@@ -191,6 +198,43 @@ update () {
 
 } // end of update // 
 }
+//call this function when overlap
+hitItem(player,item5) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item5.disableBody(true,true)
+ return false;
+}
+hitItem(player,item4) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item3.disableBody(true,true)
+ return false;
+}
+hitItem(player,item3) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item3.disableBody(true,true)
+ return false;
+}
+hitItem(player,item2) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item2.disableBody(true,true)
+ return false;
+}
+hitItem(player,item1) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item1.disableBody(true,true)
+ return false;
+}
+
 // Function to jump to level2
 level2(player, tile) {
     console.log("level2 function");

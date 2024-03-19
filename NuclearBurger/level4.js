@@ -20,6 +20,7 @@ class level4 extends Phaser.Scene {
 
     this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:32, frameHeight:32 });
     this.load.spritesheet("lettuce", "assets/lettuce.png",{ frameWidth:32, frameHeight:32 });
+    this.load.audio("plop", "assets/plop.mp3")
 
 
     //this.load.spritesheet("gen", "assets/gen.png",{ frameWidth:64, frameHeight:64 });
@@ -122,31 +123,41 @@ class level4 extends Phaser.Scene {
   
     // make the camera follow the player
     //load player
-//    this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y, "walk").setScale(2)
-   this.player = this.physics.add.sprite(398 , 1444, "walk").setScale(2)
-   this.cameras.main.startFollow(this.player);
-   window.player = this.player
+    //this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y, "walk").setScale(2)
+    this.player = this.physics.add.sprite(398 , 1444, "walk").setScale(2)
+    this.cameras.main.startFollow(this.player);
+    window.player = this.player
 
     //set player hitbox    
     this.player.body.setSize(this.player.width * 0.5, this.player.height * 0.5).setOffset(4,10)
 
 
-       //object(put under player)
-       let  item1 = map.findObject("objectLayer",(obj) => obj.name === "1");
-       this.item1 = this.physics.add.sprite(item1.x, item1.y, "lettuce");
+    //object(put under player)
+    let  item1 = map.findObject("objectLayer",(obj) => obj.name === "1");
+    this.item1 = this.physics.add.sprite(item1.x, item1.y, "lettuce");
     
-       let  item2 = map.findObject("objectLayer",(obj) => obj.name === "2");
-       this.item2 = this.physics.add.sprite(item2.x, item2.y, "lettuce");
+    let  item2 = map.findObject("objectLayer",(obj) => obj.name === "2");
+    this.item2 = this.physics.add.sprite(item2.x, item2.y, "lettuce");
            
-       let  item3 = map.findObject("objectLayer",(obj) => obj.name === "3");
-       this.item3 = this.physics.add.sprite(item3.x, item3.y, "lettuce");
+    let  item3 = map.findObject("objectLayer",(obj) => obj.name === "3");
+    this.item3 = this.physics.add.sprite(item3.x, item3.y, "lettuce");
     
-       let  item4 = map.findObject("objectLayer",(obj) => obj.name === "4");
-       this.item4 = this.physics.add.sprite(item4.x, item4.y, "lettuce");
+    let  item4 = map.findObject("objectLayer",(obj) => obj.name === "4");
+    this.item4 = this.physics.add.sprite(item4.x, item4.y, "lettuce");
     
-       let  item5 = map.findObject("objectLayer",(obj) => obj.name === "5");
-       this.item5 = this.physics.add.sprite(item5.x, item5.y, "lettuce");
-    
+    let  item5 = map.findObject("objectLayer",(obj) => obj.name === "5");
+    this.item5 = this.physics.add.sprite(item5.x, item5.y, "lettuce");
+       
+    //sound
+    this.plopSnd = this.sound.add("plop").setVolume(0.5);
+
+  //overlap
+  this.physics.add.overlap(this.player, this.item5, this.hitItem, null, this);
+  this.physics.add.overlap(this.player, this.item4, this.hitItem, null, this);
+  this.physics.add.overlap(this.player, this.item3, this.hitItem, null, this);
+  this.physics.add.overlap(this.player, this.item2, this.hitItem, null, this);
+  this.physics.add.overlap(this.player, this.item1, this.hitItem, null, this);
+
    //adding collision
    this.border.setCollisionByExclusion(-1, true);
    this.physics.add.collider(this.player, this.border)
@@ -198,6 +209,43 @@ update () {
 
 } // end of update // 
 }
+//call this function when overlap
+hitItem(player,item5) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item5.disableBody(true,true)
+ return false;
+}
+hitItem(player,item4) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item3.disableBody(true,true)
+ return false;
+}
+hitItem(player,item3) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item3.disableBody(true,true)
+ return false;
+}
+hitItem(player,item2) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item2.disableBody(true,true)
+ return false;
+}
+hitItem(player,item1) {
+  console.log("hitItem")
+  console.log("play plop")
+  this.plopSnd.play()
+  item1.disableBody(true,true)
+ return false;
+}
+
   // Function to jump to level3
 level3(player, tile) {
     console.log("level3 function");
