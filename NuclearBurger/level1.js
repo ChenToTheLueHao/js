@@ -21,6 +21,9 @@ class level1 extends Phaser.Scene {
     
     this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:15, frameHeight:15 });
 
+    //load sound
+    this.load.audio("door", "assets/door.mp3")
+
     } // end of preload //
 
     create (){
@@ -110,8 +113,6 @@ class level1 extends Phaser.Scene {
     this.funitures2 = map.createLayer("funitures2",tilesArray,0,0);
 
     console.log("loaded layer")
-
-  
     
     // make the camera follow the player
     // load player
@@ -134,6 +135,10 @@ class level1 extends Phaser.Scene {
 
        this.funitures2.setCollisionByExclusion(-1, true);
        this.physics.add.collider(this.player, this.funitures2)
+
+    //sound
+    this.doorSnd = this.sound.add("door").setVolume(0.5);
+
     } // end of create //
 
     update () {
@@ -175,6 +180,8 @@ level2(player, tile) {
     let playerPos = {}
     playerPos.x = 290
     playerPos.y = 306
+    console.log("play doorSnd")
+    this.doorSnd.play()
     this.scene.start("level2",{playerPos:playerPos});
   }
 }

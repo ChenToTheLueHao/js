@@ -24,14 +24,14 @@ class level2 extends Phaser.Scene {
     // this.load.image("pipoyaIMG2", "assets/pipoya16x16.png");
 
     this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:15, frameHeight:15 });
-
     this.load.spritesheet("bunny", "assets/bunny.png",{ frameWidth:22, frameHeight:22 });
     this.load.spritesheet("bun", "assets/bun.png",{ frameWidth:32, frameHeight:32 });
-
-
+    this.load.audio("door", "assets/door.mp3")
+    this.load.audio("plop", "assets/plop.mp3")
+    
     //this.load.spritesheet("gen", "assets/gen.png",{ frameWidth:64, frameHeight:64 });
 
-    } // end of preload //
+    } // end of preload //////////////////////////////////////////////////////
 
     create (){
        
@@ -143,6 +143,15 @@ class level2 extends Phaser.Scene {
     //set player hitbox    
         this.player.body.setSize(this.player.width * 0.5, this.player.height * 0.5).setOffset(4,10)
 
+    this.anims.create({
+        key:"bunAnim",
+        frames:this.anims.generateFrameNumbers("bun",{ start:0, end:1 }),
+        frameRate:4,
+        repeat:-1
+        });
+
+    // this.bun = this.physics.add.sprite(bun.x, bun.y, "bun").play("bunAnim");   
+
     //object
     let  item1 = map.findObject("objectLayer",(obj) => obj.name === "1");
     this.item1 = this.physics.add.sprite(item1.x, item1.y, "bun");
@@ -159,6 +168,13 @@ class level2 extends Phaser.Scene {
     let  item5 = map.findObject("objectLayer",(obj) => obj.name === "5");
     this.item5 = this.physics.add.sprite(item5.x, item5.y, "bun");
 
+    //overlap
+    this.physics.add.overlap(this.player, this.item5, this.hitItem, null, this);
+    this.physics.add.overlap(this.player, this.item4, this.hitItem, null, this);
+    this.physics.add.overlap(this.player, this.item3, this.hitItem, null, this);
+    this.physics.add.overlap(this.player, this.item2, this.hitItem, null, this);
+    this.physics.add.overlap(this.player, this.item1, this.hitItem, null, this);
+
 //enemy
 let  enemy1 = map.findObject("enemyLayer",(obj) => obj.name === "1");
 this.enemy1 = this.physics.add.sprite(enemy1.x, enemy1.y, "bunny");
@@ -172,6 +188,10 @@ this.enemy1 = this.physics.add.sprite(enemy1.x, enemy1.y, "bunny");
 
        this.house.setCollisionByExclusion(-1, true);
        this.physics.add.collider(this.player, this.house)
+
+          //sound
+    this.doorSnd = this.sound.add("door").setVolume(0.5);
+    this.plopSnd = this.sound.add("plop").setVolume(0.5);
        
 // in create, add tweens  
 this.tweens.add({
@@ -182,7 +202,7 @@ this.tweens.add({
     duration: 1000,
     repeat: -1
 })
-    } // end of create //
+    } // end of create /////////////////////////////////////////////////////
 
     update () {
 
@@ -224,13 +244,66 @@ this.tweens.add({
                 this.level3();
               }
 
-    } // end of update // 
-}
+    } 
+}// end of update //////////////////////////////////////////////////////////
+
+//call this function when overlap
+hitItem(player,item5) {
+    console.log("hitItem")
+    console.log("play plop")
+    this.plopSnd.play()
+   // this.camera.main.shake(500)// 500ms
+   //(player knockback) player.x = player.x - 50
+    item5.disableBody(true,true)
+   return false;
+  }
+  //call this function when overlap
+hitItem(player,item4) {
+    console.log("hitItem")
+    console.log("play plop")
+    this.plopSnd.play()
+   // this.camera.main.shake(500)// 500ms
+   //(player knockback) player.x = player.x - 50
+    item3.disableBody(true,true)
+   return false;
+  }
+  //call this function when overlap
+hitItem(player,item3) {
+    console.log("hitItem")
+    console.log("play plop")
+    this.plopSnd.play()
+   // this.camera.main.shake(500)// 500ms
+   //(player knockback) player.x = player.x - 50
+    item3.disableBody(true,true)
+   return false;
+  }
+    //call this function when overlap
+hitItem(player,item2) {
+    console.log("hitItem")
+    console.log("play plop")
+    this.plopSnd.play()
+   // this.camera.main.shake(500)// 500ms
+   //(player knockback) player.x = player.x - 50
+    item2.disableBody(true,true)
+   return false;
+  }
+    //call this function when overlap
+hitItem(player,item1) {
+    console.log("hitItem")
+    console.log("play plop")
+    this.plopSnd.play()
+   // this.camera.main.shake(500)// 500ms
+   //(player knockback) player.x = player.x - 50
+    item1.disableBody(true,true)
+   return false;
+  }
+
 level1(player, tile) {
     console.log("level1 function");
     let playerPos = {}
     playerPos.x = 150
     playerPos.y = 586
+    this.doorSnd.play()
     this.scene.start("level1",{playerPos:playerPos});
 }
 

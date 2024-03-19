@@ -174,8 +174,8 @@ update () {
        if (
         this.player.x > 737 &&
         this.player.x < 817 &&
-        this.player.y > 448 &&
-        this.player.y < 485
+        this.player.y > 449 &&
+        this.player.y < 495
       ) {
         console.log("to forest");
         this.level2();

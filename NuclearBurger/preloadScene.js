@@ -3,10 +3,20 @@ class preloadScene extends Phaser.Scene {
         super({ key: 'preloadScene' });
     }
     
+        preload(){
+        this.load.image("intro","assets/intro.png")
+        this.load.audio("bgMusic","assets/bgMusic.mp3")
+        }
+
     create () {
         console.log("preloadScene")
-        this.add.text(10,500, 'Animation labs, press spacebar to continue', 
-            { font: '24px Courier', fill: '#ffffff' });
+
+        this.add.image(0,0,"intro").setOrigin(0,0)
+        this.music = this.sound.add("bgMusic",{loop: true}).setVolume(0.7);
+this.music.play();
+        
+        // this.add.text(10,500, 'Animation labs, press spacebar to continue', 
+            // { font: '24px Courier', fill: '#ffffff' });
 
         var spaceDown = this.input.keyboard.addKey('SPACE');
 
