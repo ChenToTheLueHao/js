@@ -19,7 +19,7 @@ class level1 extends Phaser.Scene {
     // this.load.image("buildings", "assets/Buildings32x32.png");
     this.load.image("pipoyaIMG", "assets/pipoya32x32.png");
     
-    this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:15, frameHeight:15 });
+    this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:50, frameHeight:50 });
 
     //load sound
     this.load.audio("door", "assets/door.mp3")
@@ -116,12 +116,12 @@ class level1 extends Phaser.Scene {
     
     // make the camera follow the player
     // load player
-        this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y , "walk").setScale(2)
+        this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y , "walk").setScale(1)
         this.cameras.main.startFollow(this.player);
         window.player = this.player
 
     //set player hitbox    
-        this.player.body.setSize(this.player.width * 0.5, this.player.height * 0.5).setOffset(4,10)
+        this.player.body.setSize(this.player.width * 0.25, this.player.height * 0.25).setOffset(17,40)
 
     //create cursor
     this.cursors = this.input.keyboard.createCursorKeys();

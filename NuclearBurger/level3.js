@@ -18,7 +18,7 @@ class level3 extends Phaser.Scene {
       this.load.image("pipoyaIMG", "assets/pipoya32x32.png");
       this.load.image("cheesefallIMG", "assets/cheesefall.png");
 
-      this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:32, frameHeight:32 });
+      this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:50, frameHeight:50 });
       this.load.spritesheet("cheese", 'assets/cheese.png',{ frameWidth:32, frameHeight:32 });
       this.load.audio("plop", "assets/plop.mp3")
 
@@ -112,12 +112,12 @@ class level3 extends Phaser.Scene {
     this.trees = map.createLayer("trees",tilesArray,0,0);
   
    // make the camera follow the player
-   this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y, "walk").setScale(2)
+   this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y, "walk").setScale(1)
    this.cameras.main.startFollow(this.player);
    window.player = this.player
 
     //set player hitbox    
-    this.player.body.setSize(this.player.width * 0.5, this.player.height * 0.5).setOffset(4,10)
+    this.player.body.setSize(this.player.width * 0.25, this.player.height * 0.25).setOffset(17,40)
 
     //object(put under player)
     let  item1 = map.findObject("objectLayer",(obj) => obj.name === "1");

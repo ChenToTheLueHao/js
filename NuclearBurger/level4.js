@@ -18,7 +18,7 @@ class level4 extends Phaser.Scene {
     this.load.image("pipoyaIMG", "assets/pipoya32x32.png");
     // this.load.image("cheesefallIMG", "assets/cheesefall.png");
 
-    this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:32, frameHeight:32 });
+    this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:50, frameHeight:50 });
     this.load.spritesheet("lettuce", "assets/lettuce.png",{ frameWidth:32, frameHeight:32 });
     this.load.audio("plop", "assets/plop.mp3")
 
@@ -124,12 +124,12 @@ class level4 extends Phaser.Scene {
     // make the camera follow the player
     //load player
     //this.player = this.physics.add.sprite(this.playerPos.x , this.playerPos.y, "walk").setScale(2)
-    this.player = this.physics.add.sprite(398 , 1444, "walk").setScale(2)
+    this.player = this.physics.add.sprite(398 , 1444, "walk").setScale(1)
     this.cameras.main.startFollow(this.player);
     window.player = this.player
 
     //set player hitbox    
-    this.player.body.setSize(this.player.width * 0.5, this.player.height * 0.5).setOffset(4,10)
+    this.player.body.setSize(this.player.width * 0.25, this.player.height * 0.25).setOffset(17,40)
 
 
     //object(put under player)
@@ -189,15 +189,15 @@ update () {
 
           //go to volcano(level3)
           if (
-            this.player.x < 410 &&
-            this.player.x > 380 &&
-            this.player.y > 1480
+            this.player.x < 411 &&
+            this.player.x > 392 &&
+            this.player.y > 1476
           ) {
             console.log("to volcano");
             this.level3();
           }
 
-            //go to volcano(level5)
+            //go to arena(level5)
             if (
                 this.player.y > 740 &&
                 this.player.y < 820 &&
