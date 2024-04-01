@@ -6,6 +6,8 @@ class win1 extends Phaser.Scene {
         preload(){
         this.load.image("win1","assets/win1.png")
         this.load.audio("win1","assets/win1.mp3")
+        this.load.audio("click","assets/click.mp3")
+
         }
 
     create () {

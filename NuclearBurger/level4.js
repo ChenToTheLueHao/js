@@ -67,35 +67,35 @@ class level4 extends Phaser.Scene {
     });
 
         //object & enemy animation
-        this.anims.create({
+    this.anims.create({
           key:"lettuceAnim",
           frames:this.anims.generateFrameNumbers("lettuce",
           { start:0, end:1 }),
           frameRate:2,
           repeat:-1
           });
-          this.anims.create({
+    this.anims.create({
             key:"bunnyAnimDown",
             frames:this.anims.generateFrameNumbers("bunny",
             { start:0, end:3 }),
             frameRate:4,
             repeat:-1
             });
-        this.anims.create({
+   this.anims.create({
             key:"bunnyAnimLeft",
             frames:this.anims.generateFrameNumbers("bunny",
             { start:4, end:7 }),
             frameRate:4,
             repeat:-1
             });
-        this.anims.create({
+  this.anims.create({
             key:"bunnyAnimRight",
             frames:this.anims.generateFrameNumbers("bunny",
             { start:8, end:11 }),
              frameRate:4,
              repeat:-1
             });
-            this.anims.create({
+   this.anims.create({
             key:"bunnyAnimUp",
             frames:this.anims.generateFrameNumbers("bunny",
             { start:12, end:15 }),

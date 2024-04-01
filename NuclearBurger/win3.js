@@ -5,6 +5,7 @@ class win3 extends Phaser.Scene {
     
         preload(){
         this.load.image("win3","assets/win3.png")
+        this.load.audio("explosion","assets/explosion.mp3")
         // this.load.audio("win1","assets/win1.mp3")
         }
 
@@ -12,8 +13,8 @@ class win3 extends Phaser.Scene {
         console.log("lose create loaded")
         this.scene.stop("win2");
         this.add.image(0,0,"win3").setOrigin(0,0)
-//         this.music = this.sound.add("win3",{loop: false}).setVolume(1.5);
-// this.music.play();
+        this.music = this.sound.add("explosion",{loop: false}).setVolume(1.5);
+        this.music.play();
 
         var spaceDown = this.input.keyboard.addKey('SPACE');
 
