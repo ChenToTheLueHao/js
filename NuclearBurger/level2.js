@@ -27,6 +27,7 @@ class level2 extends Phaser.Scene {
     this.load.audio("door", "assets/door.mp3")
     this.load.audio("plop", "assets/plop.mp3")
     this.load.audio("hitSnd", "assets/hitSnd.mp3")
+    this.load.audio("sand", "assets/sand.mp3")
     
     //this.load.spritesheet("gen", "assets/gen.png",{ frameWidth:64, frameHeight:64 });
 
@@ -98,20 +99,10 @@ class level2 extends Phaser.Scene {
         this.anims.create({
         key:"bunnyAnimUp",
         frames:this.anims.generateFrameNumbers("bunny",
-        { start:16, end:19 }),
+        { start:12, end:15 }),
         frameRate:4,
         repeat:-1
         });
-
-        // in create, add tweens  
-        this.tweens.add({
-            targets: this.enemy1,
-            x: 10,
-            //flipX: true,
-            yoyo: true,
-            duration: 1000,
-            repeat: -1
-            })
 
     //Step 3 - Create the map from main
     var key1Down = this.input.keyboard.addKey(49);
@@ -188,11 +179,11 @@ class level2 extends Phaser.Scene {
         let  enemy4 = map.findObject("enemyLayer",(obj) => obj.name === "4")
         let  enemy5 = map.findObject("enemyLayer",(obj) => obj.name === "5")
 
-        this.enemy1 = this.physics.add.sprite(enemy1.x, enemy1.y, "bunny").play("bunnyAnimDown").setScale(2)
+        this.enemy1 = this.physics.add.sprite(enemy1.x, enemy1.y, "bunny").play("bunnyAnimLeft").setScale(2)
         this.enemy2 = this.physics.add.sprite(enemy2.x, enemy2.y, "bunny").play("bunnyAnimDown").setScale(2)
-        this.enemy3 = this.physics.add.sprite(enemy3.x, enemy3.y, "bunny").play("bunnyAnimDown").setScale(2)
-        this.enemy4 = this.physics.add.sprite(enemy4.x, enemy4.y, "bunny").play("bunnyAnimDown").setScale(2)
-        this.enemy5 = this.physics.add.sprite(enemy5.x, enemy5.y, "bunny").play("bunnyAnimDown").setScale(2)
+        this.enemy3 = this.physics.add.sprite(enemy3.x, enemy3.y, "bunny").play("bunnyAnimUp").setScale(2)
+        this.enemy4 = this.physics.add.sprite(enemy4.x, enemy4.y, "bunny").play("bunnyAnimRight").setScale(2)
+        this.enemy5 = this.physics.add.sprite(enemy5.x, enemy5.y, "bunny").play("bunnyAnimUp").setScale(2)
 
 
     // this.bun = this.physics.add.sprite(item5.x, item5.y, "bun").play("bunAnim");
@@ -217,7 +208,91 @@ class level2 extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.enemy2, this.hitEnemy, null, this);
     this.physics.add.overlap(this.player, this.enemy1, this.hitEnemy, null, this);
     
-    // this.enemy1 = this.physics.add.sprite(enemy1.x, enemy1.y, "bunny").play("bunnyAnimLeft")
+   // in create, add tweens  
+   this.tweens.add({
+    targets: this.enemy5,
+    y: 250,
+    flipY: false,
+    yoyo: true,
+    duration: 5000,
+    repeat: -1,
+    onYoyo: () => {
+        console.log("onYoyo");
+        this.enemy5.play("bunnyAnimDown");
+    },
+    onRepeat: () => {
+        console.log("onRepeat");
+        this.enemy5.play("bunnyAnimUp");
+    }
+});
+
+this.tweens.add({
+    targets: this.enemy4,
+    x: 1585,
+    flipX: false,
+    yoyo: true,
+    duration: 2000,
+    repeat: -1,
+    onYoyo: () => {
+        console.log("onYoyo");
+        this.enemy4.play("bunnyAnimLeft");
+    },
+    onRepeat: () => {
+        console.log("onRepeat");
+        this.enemy4.play("bunnyAnimRight");
+    }
+});
+
+this.tweens.add({
+    targets: this.enemy3,
+    y: 210,
+    flipY: false,
+    yoyo: true,
+    duration: 2000,
+    repeat: -1,
+    onYoyo: () => {
+        console.log("onYoyo");
+        this.enemy3.play("bunnyAnimDown");
+    },
+    onRepeat: () => {
+        console.log("onRepeat");
+        this.enemy3.play("bunnyAnimUp");
+    }
+});
+
+this.tweens.add({
+    targets: this.enemy2,
+    y: 695,
+    flipY: false,
+    yoyo: true,
+    duration: 2000,
+    repeat: -1,
+    onYoyo: () => {
+        console.log("onYoyo");
+        this.enemy2.play("bunnyAnimUp");
+    },
+    onRepeat: () => {
+        console.log("onRepeat");
+        this.enemy2.play("bunnyAnimDown");
+    }
+});
+   this.tweens.add({
+    targets: this.enemy1,
+    x: 1775,
+    flipX: false,
+    yoyo: true,
+    duration: 5000,
+    repeat: -1,
+    onYoyo: () => {
+        console.log("onYoyo");
+        this.enemy1.play("bunnyAnimRight");
+    },
+    onRepeat: () => {
+        console.log("onRepeat");
+        this.enemy1.play("bunnyAnimLeft");
+    }
+});
+
 
     //create cursor
     this.cursors = this.input.keyboard.createCursorKeys();
@@ -232,6 +307,7 @@ class level2 extends Phaser.Scene {
     this.doorSnd = this.sound.add("door").setVolume(0.5);
     this.plopSnd = this.sound.add("plop").setVolume(0.5);
     this.hitSnd = this.sound.add("hitSnd").setVolume(1.5);
+    this.sand = this.sound.add("sand").setVolume(1.5);
 
     } // end of create /////////////////////////////////////////////////////
 
@@ -295,6 +371,7 @@ hitItem(player,item) {
     this.cameras.main.shake(100); // 500ms
     //(player knockback) player.x = player.x - 50
     enemy1.disableBody(true, true);
+    this.scene.start("lose")
     return false;
   }
 
@@ -313,6 +390,7 @@ level3(player, tile) {
     let playerPos = {}
     playerPos.x = 80
     playerPos.y = 1523
+    this.sand.play()
     this.scene.start("level3",{playerPos:playerPos});
 }
 }

@@ -46,7 +46,7 @@
   <object id="5" name="3" x="1466.67" y="692.667">
    <point/>
   </object>
-  <object id="6" name="2" x="1487.33" y="816.667">
+  <object id="6" name="2" x="1484" y="828">
    <point/>
   </object>
   <object id="7" name="1" x="1286" y="829.333">
@@ -60,13 +60,13 @@
   <object id="16" name="4" x="1084" y="794">
    <point/>
   </object>
-  <object id="17" name="3" x="1384" y="752.667">
+  <object id="17" name="3" x="1466.67" y="696.667">
    <point/>
   </object>
   <object id="18" name="2" x="1625.33" y="757.333">
    <point/>
   </object>
-  <object id="20" name="1" x="1785.33" y="810.667">
+  <object id="20" name="1" x="1744.66" y="829.334">
    <point/>
   </object>
  </objectgroup>

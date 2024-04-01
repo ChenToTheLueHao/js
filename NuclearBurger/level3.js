@@ -19,8 +19,12 @@ class level3 extends Phaser.Scene {
       this.load.image("cheesefallIMG", "assets/cheesefall.png");
 
       this.load.spritesheet("walk", "assets/walk_edit.png",{ frameWidth:50, frameHeight:50 });
-      this.load.spritesheet("cheese", 'assets/cheese.png',{ frameWidth:32, frameHeight:32 });
+    this.load.spritesheet("bunny", "assets/bunny.png",{ frameWidth:22, frameHeight:22 });
+    this.load.spritesheet("cheese", 'assets/cheese.png',{ frameWidth:32, frameHeight:32 });
       this.load.audio("plop", "assets/plop.mp3")
+      this.load.audio("hitSnd", "assets/hitSnd.mp3")
+      this.load.audio("sand", "assets/sand.mp3")
+      this.load.audio("upSnd", "assets/upSnd.mp3")
 
     } // end of preload //
 
@@ -60,6 +64,42 @@ class level3 extends Phaser.Scene {
         repeat:-1
     });
 
+        //object & enemy animation
+        this.anims.create({
+          key:"cheeseAnim",
+          frames:this.anims.generateFrameNumbers("cheese",
+          { start:0, end:1 }),
+          frameRate:2,
+          repeat:-1
+          });
+          this.anims.create({
+            key:"bunnyAnimDown",
+            frames:this.anims.generateFrameNumbers("bunny",
+            { start:0, end:3 }),
+            frameRate:4,
+            repeat:-1
+            });
+        this.anims.create({
+            key:"bunnyAnimLeft",
+            frames:this.anims.generateFrameNumbers("bunny",
+            { start:4, end:7 }),
+            frameRate:4,
+            repeat:-1
+            });
+        this.anims.create({
+            key:"bunnyAnimRight",
+            frames:this.anims.generateFrameNumbers("bunny",
+            { start:8, end:11 }),
+             frameRate:4,
+             repeat:-1
+            });
+            this.anims.create({
+            key:"bunnyAnimUp",
+            frames:this.anims.generateFrameNumbers("bunny",
+            { start:12, end:15 }),
+            frameRate:4,
+            repeat:-1
+            });          
 
     //Step 3 - Create the map from main
 
@@ -119,24 +159,47 @@ class level3 extends Phaser.Scene {
     //set player hitbox    
     this.player.body.setSize(this.player.width * 0.25, this.player.height * 0.25).setOffset(17,40)
 
+            //enemy
+            let  enemy1 = map.findObject("enemyLayer",(obj) => obj.name === "1")
+            let  enemy2 = map.findObject("enemyLayer",(obj) => obj.name === "2")
+            let  enemy3 = map.findObject("enemyLayer",(obj) => obj.name === "3")
+            let  enemy4 = map.findObject("enemyLayer",(obj) => obj.name === "4")
+            let  enemy5 = map.findObject("enemyLayer",(obj) => obj.name === "5")
+
+            this.enemy1 = this.physics.add.sprite(enemy1.x, enemy1.y, "bunny").play("bunnyAnimLeft").setScale(2)
+            this.enemy2 = this.physics.add.sprite(enemy2.x, enemy2.y, "bunny").play("bunnyAnimRight").setScale(2)
+            this.enemy3 = this.physics.add.sprite(enemy3.x, enemy3.y, "bunny").play("bunnyAnimUp").setScale(2)
+            this.enemy4 = this.physics.add.sprite(enemy4.x, enemy4.y, "bunny").play("bunnyAnimRight").setScale(2)
+            this.enemy5 = this.physics.add.sprite(enemy5.x, enemy5.y, "bunny").play("bunnyAnimUp").setScale(2)
+            
+            this.physics.add.overlap(this.player, this.enemy5, this.hitEnemy, null, this);
+            this.physics.add.overlap(this.player, this.enemy4, this.hitEnemy, null, this);
+            this.physics.add.overlap(this.player, this.enemy3, this.hitEnemy, null, this);
+            this.physics.add.overlap(this.player, this.enemy2, this.hitEnemy, null, this);
+            this.physics.add.overlap(this.player, this.enemy1, this.hitEnemy, null, this);
+                
+
     //object(put under player)
     let  item1 = map.findObject("objectLayer",(obj) => obj.name === "1");
-    this.item1 = this.physics.add.sprite(item1.x, item1.y, "cheese");
+    this.item1 = this.physics.add.sprite(item1.x, item1.y, "cheese").play("cheeseAnim");
  
     let  item2 = map.findObject("objectLayer",(obj) => obj.name === "2");
-    this.item2 = this.physics.add.sprite(item2.x, item2.y, "cheese");
+    this.item2 = this.physics.add.sprite(item2.x, item2.y, "cheese").play("cheeseAnim");
         
     let  item3 = map.findObject("objectLayer",(obj) => obj.name === "3");
-    this.item3 = this.physics.add.sprite(item3.x, item3.y, "cheese");
+    this.item3 = this.physics.add.sprite(item3.x, item3.y, "cheese").play("cheeseAnim");
  
     let  item4 = map.findObject("objectLayer",(obj) => obj.name === "4");
-    this.item4 = this.physics.add.sprite(item4.x, item4.y, "cheese");
+    this.item4 = this.physics.add.sprite(item4.x, item4.y, "cheese").play("cheeseAnim");
  
     let  item5 = map.findObject("objectLayer",(obj) => obj.name === "5");
-    this.item5 = this.physics.add.sprite(item5.x, item5.y, "cheese");
+    this.item5 = this.physics.add.sprite(item5.x, item5.y, "cheese").play("cheeseAnim");
  
     //sound
     this.plopSnd = this.sound.add("plop").setVolume(0.5);
+    this.hitSnd = this.sound.add("hitSnd").setVolume(1.5);
+    this.sand = this.sound.add("sand").setVolume(1.5);
+    this.upSnd = this.sound.add("upSnd").setVolume(1.5);
 
   //overlap
   this.physics.add.overlap(this.player, this.item5, this.hitItem, null, this);
@@ -154,6 +217,92 @@ class level3 extends Phaser.Scene {
    this.physics.add.collider(this.player, this.cliff)
 
   this.cursors = this.input.keyboard.createCursorKeys();
+
+   // in create, add tweens  
+   this.tweens.add({
+    targets: this.enemy5,
+    y: 1500,
+    flipY: false,
+    yoyo: true,
+    duration: 2000,
+    repeat: -1,
+    onYoyo: () => {
+        console.log("onYoyo");
+        this.enemy5.play("bunnyAnimDown");
+    },
+    onRepeat: () => {
+        console.log("onRepeat");
+        this.enemy5.play("bunnyAnimUp");
+    }
+});
+
+this.tweens.add({
+  targets: this.enemy4,
+  x: 1635,
+  flipX: false,
+  yoyo: true,
+  duration: 2000,
+  repeat: -1,
+  onYoyo: () => {
+      console.log("onYoyo");
+      this.enemy4.play("bunnyAnimLeft");
+  },
+  onRepeat: () => {
+      console.log("onRepeat");
+      this.enemy4.play("bunnyAnimRight");
+  }
+});
+
+this.tweens.add({
+  targets: this.enemy3,
+  y: 1225,
+  flipY: false,
+  yoyo: true,
+  duration: 2000,
+  repeat: -1,
+  onYoyo: () => {
+      console.log("onYoyo");
+      this.enemy3.play("bunnyAnimUp");
+  },
+  onRepeat: () => {
+      console.log("onRepeat");
+      this.enemy3.play("bunnyAnimDown");
+  }
+});
+
+this.tweens.add({
+  targets: this.enemy2,
+  x: 1260,
+  flipX: false,
+  yoyo: true,
+  duration: 5000,
+  repeat: -1,
+  onYoyo: () => {
+      console.log("onYoyo");
+      this.enemy2.play("bunnyAnimLeft");
+  },
+  onRepeat: () => {
+      console.log("onRepeat");
+      this.enemy2.play("bunnyAnimRight");
+  }
+});
+
+this.tweens.add({
+  targets: this.enemy1,
+  x: 1020,
+  flipX: false,
+  yoyo: true,
+  duration: 2000,
+  repeat: -1,
+  onYoyo: () => {
+      console.log("onYoyo");
+      this.enemy1.play("bunnyAnimRight");
+  },
+  onRepeat: () => {
+      console.log("onRepeat");
+      this.enemy1.play("bunnyAnimLeft");
+  }
+});
 } // end of create //
 
 update () {
@@ -199,48 +348,31 @@ update () {
 } // end of update // 
 }
 //call this function when overlap
-hitItem(player,item5) {
+hitItem(player,item) {
   console.log("hitItem")
   console.log("play plop")
   this.plopSnd.play()
-  item5.disableBody(true,true)
+  item.disableBody(true,true)
  return false;
 }
-hitItem(player,item4) {
-  console.log("hitItem")
-  console.log("play plop")
-  this.plopSnd.play()
-  item3.disableBody(true,true)
- return false;
-}
-hitItem(player,item3) {
-  console.log("hitItem")
-  console.log("play plop")
-  this.plopSnd.play()
-  item3.disableBody(true,true)
- return false;
-}
-hitItem(player,item2) {
-  console.log("hitItem")
-  console.log("play plop")
-  this.plopSnd.play()
-  item2.disableBody(true,true)
- return false;
-}
-hitItem(player,item1) {
-  console.log("hitItem")
-  console.log("play plop")
-  this.plopSnd.play()
-  item1.disableBody(true,true)
- return false;
-}
-
+  //disable enemy
+  //same for this function, only need to be entered once
+  hitEnemy(player, enemy1) {
+    console.log("hitEnemy");
+    this.hitSnd.play();
+    this.cameras.main.shake(100); // 500ms
+    //(player knockback) player.x = player.x - 50
+    enemy1.disableBody(true, true);
+    this.scene.start("lose")
+    return false;
+  }
 // Function to jump to level2
 level2(player, tile) {
     console.log("level2 function");
     let playerPos = {}
     playerPos.x = 2490
     playerPos.y = 223
+    this.sand.play()
     this.scene.start("level2",{playerPos:playerPos});
   }
   // Function to jump to level4
@@ -249,6 +381,7 @@ level4(player, tile) {
     let playerPos = {}
     playerPos.x = 398
     playerPos.y = 1444
+    this.upSnd.play()
     this.scene.start("level4",{playerPos:playerPos});
   }
 }
