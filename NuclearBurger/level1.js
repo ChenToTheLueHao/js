@@ -106,6 +106,9 @@ class level1 extends Phaser.Scene {
         
     key5Down.on('down', function(){
         console.log("key 5 pressed");
+        playerPos.x = 800
+        playerPos.y = 599
+        this.tpSnd.play()
         this.scene.start("level5",{playerPos:playerPos});
         }, this );
 
