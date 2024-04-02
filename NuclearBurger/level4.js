@@ -107,36 +107,36 @@ class level4 extends Phaser.Scene {
 
     let map = this.make.tilemap({ key: "level4" });
       
-  //   var key1Down = this.input.keyboard.addKey(49);
-  //   var key2Down = this.input.keyboard.addKey(50);
-  //   var key3Down = this.input.keyboard.addKey(51);
-  //   var key4Down = this.input.keyboard.addKey(52);
-  //   var key5Down = this.input.keyboard.addKey(53);
+    var key1Down = this.input.keyboard.addKey(49);
+    var key2Down = this.input.keyboard.addKey(50);
+    var key3Down = this.input.keyboard.addKey(51);
+    var key4Down = this.input.keyboard.addKey(52);
+    var key5Down = this.input.keyboard.addKey(53);
 
-  // key1Down.on('down', function(){
-  //   console.log("key 1 pressed");
-  //   this.scene.start("level1");
-  //   }, this );
+  key1Down.on('down', function(){
+    console.log("key 1 pressed");
+    this.scene.start("level1");
+    }, this );
     
-  //   key2Down.on('down', function(){
-  //       console.log("key 2 pressed");
-  //       this.scene.start("level2");
-  //       }, this );
+    key2Down.on('down', function(){
+        console.log("key 2 pressed");
+        this.scene.start("level2");
+        }, this );
     
-  //   key3Down.on('down', function(){
-  //       console.log("key 3 pressed");
-  //       this.scene.start("level3");
-  //       }, this );
+    key3Down.on('down', function(){
+        console.log("key 3 pressed");
+        this.scene.start("level3");
+        }, this );
 
-  //   key4Down.on('down', function(){
-  //       console.log("key 4 pressed");
-  //       this.scene.start("level4");
-  //       }, this );
+    key4Down.on('down', function(){
+        console.log("key 4 pressed");
+        this.scene.start("level4");
+        }, this );
         
-  //   key5Down.on('down', function(){
-  //       console.log("key 5 pressed");
-  //       this.scene.start("level5");
-  //       }, this );
+    key5Down.on('down', function(){
+        console.log("key 5 pressed");
+        this.scene.start("level5");
+        }, this );
             
 
     // Step 4 Load the game tiles
