@@ -82,22 +82,31 @@ class level1 extends Phaser.Scene {
     
     key2Down.on('down', function(){
         console.log("key 2 pressed");
-        this.scene.start("level2");
+        let playerPos = {}
+        playerPos.x = 290
+        playerPos.y = 306
+        this.scene.start("level2",{playerPos:playerPos});
         }, this );
     
     key3Down.on('down', function(){
         console.log("key 3 pressed");
-        this.scene.start("level3");
+        let playerPos = {}
+        playerPos.x = 80
+        playerPos.y = 1523
+        this.scene.start("level3",{playerPos:playerPos});
         }, this );
 
     key4Down.on('down', function(){
         console.log("key 4 pressed");
-        this.scene.start("level4");
+        let playerPos = {}
+        playerPos.x = 398
+        playerPos.y = 1444
+        this.scene.start("level4",{playerPos:playerPos});
         }, this );
         
     key5Down.on('down', function(){
         console.log("key 5 pressed");
-        this.scene.start("level5");
+        this.scene.start("level5",{playerPos:playerPos});
         }, this );
 
     let map = this.make.tilemap({ key: "home" });
